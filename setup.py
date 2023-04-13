@@ -29,7 +29,7 @@ setup(
     # There are some restrictions on what makes a valid project name
     # specification here:
     # https://packaging.python.org/specifications/core-metadata/#name
-    name='openfoamparser',  # Required
+    name='openfoamparser_mai',  # Required
 
     # Versions should comply with PEP 440:
     # https://www.python.org/dev/peps/pep-0440/
@@ -37,7 +37,7 @@ setup(
     # For a discussion on single-sourcing the version across setup.py and the
     # project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='0.13',  # Required
+    version='0.14',  # Required
 
     # This is a one-line description or tagline of what your project does. This
     # corresponds to the "Summary" metadata field:
@@ -78,7 +78,7 @@ setup(
 
     # This should be a valid email address corresponding to the author listed
     # above.
-    author_email='info@ccs-labs.org',  # Optional
+    author_email='vadim@phygitalism.com',  # Optional
 
     # Classifiers help users find your project by categorizing it.
     #
@@ -129,7 +129,7 @@ setup(
     # and refuse to install the project if the version does not match. If you
     # do not support Python 2, you can simplify this to '>=3.5' or similar, see
     # https://packaging.python.org/guides/distributing-packages-using-setuptools/#python-requires
-    python_requires='>=3',
+    python_requires='>=3.7',
 
     # This field lists other packages that your project depends on to run.
     # Any package you put here will be installed by pip when your project is
@@ -192,7 +192,7 @@ setup(
     # what's used to render the link text on PyPI.
     project_urls={  # Optional
         'Parent Project Description': 'https://www.forschung-it-sicherheit-kommunikationssysteme.de/projekte/mamoko',
-        'Source': 'https://github.com/ApolloLV/openfoamparser',
-        'Forked from': 'https://github.com/dayigu/ofpp',
+        'Source': 'https://github.com/resi2311/openfoamparser.git',
+        'Forked from': 'https://github.com/ApolloLV/openfoamparser',
     },
 )

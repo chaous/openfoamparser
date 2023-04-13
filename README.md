@@ -1,12 +1,16 @@
 # Openfoamparser
 This is a simple Python library for parsing result or mesh files in OpenFOAM output files to Numpy arrays. Both ascii and binary format are supported.
 
+Forked from [AppoloV openfoamparser](https://github.com/ApolloLV/openfoamparser).
+
+Main new feature: bugfix of mesh parsing.
+
 ## Installation
 
 Install with pip:
 
 ```shell
-pip install openfoamparser
+pip install openfoamparser_mai
 ```
 
 or install with setup.py by:
