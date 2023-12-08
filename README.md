@@ -264,12 +264,6 @@ False
 
 
 
-## Authors
+## Author
 
-XU Xianghua <dayigu at gmail dot com>
-
-Jan Drees <jdrees at mail dot uni-paderborn dot de>
-
-Timothy-Edward-Kendon
-
-YuyangL
+V.L. Kondarattsev
