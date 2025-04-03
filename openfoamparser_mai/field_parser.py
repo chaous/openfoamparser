@@ -8,6 +8,7 @@ from __future__ import print_function
 import os
 import struct
 import numpy as np
+import gzip
 
 
 def parse_field_all(fn):
@@ -29,13 +30,25 @@ def parse_internal_field(fn):
     parse internal field, extract data to numpy.array
     :param fn: file name
     :return: numpy array of internal field
+    :raises FileNotFoundError: if file (or file.gz) cannot be found
     """
+    # Check if file exists; if not, try appending '.gz'
     if not os.path.exists(fn):
-        print("Can not open file " + fn)
-        return None
-    with open(fn, "rb") as f:
-        content = f.readlines()
-        return parse_internal_field_content(content)
+        gz_fn = fn if fn.endswith(".gz") else fn + ".gz"
+        if os.path.exists(gz_fn):
+            fn = gz_fn
+        else:
+            raise FileNotFoundError("Cannot open file " + fn)
+
+    # Open the file normally or with gzip if it is compressed.
+    if fn.endswith(".gz"):
+        with gzip.open(fn, "rb") as f:
+            content = f.readlines()
+    else:
+        with open(fn, "rb") as f:
+            content = f.readlines()
+    
+    return parse_internal_field_content(content)
 
 
 def parse_internal_field_content(content):
@@ -57,16 +70,28 @@ def parse_internal_field_content(content):
 
 def parse_boundary_field(fn):
     """
-    parse internal field, extract data to numpy.array
+    parse boundary field, extract data to numpy.array
     :param fn: file name
     :return: numpy array of boundary field
+    :raises FileNotFoundError: if file (or file.gz) cannot be found
     """
+    # Check if file exists; if not, try appending '.gz'
     if not os.path.exists(fn):
-        print("Can not open file " + fn)
-        return None
-    with open(fn, "rb") as f:
-        content = f.readlines()
-        return parse_boundary_content(content)
+        gz_fn = fn if fn.endswith(".gz") else fn + ".gz"
+        if os.path.exists(gz_fn):
+            fn = gz_fn
+        else:
+            raise FileNotFoundError("Cannot open file " + fn)
+
+    # Open the file normally or with gzip if it is compressed.
+    if fn.endswith(".gz"):
+        with gzip.open(fn, "rb") as f:
+            content = f.readlines()
+    else:
+        with open(fn, "rb") as f:
+            content = f.readlines()
+
+    return parse_boundary_content(content)
 
 
 def parse_boundary_content(content):
