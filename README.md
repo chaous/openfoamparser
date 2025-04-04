@@ -10,7 +10,7 @@ Main new feature: bugfix of mesh parsing.
 Install with pip:
 
 ```shell
-pip install openfoamparser_mai
+pip install openfoamparser_ilya
 ```
 
 or install with setup.py by:
@@ -71,11 +71,11 @@ Class FoamMesh can parse mesh data (in ascii or binary format) and provide inqui
 ## Usage
 
 ```python
-import Ofpp
-V = Ofpp.parse_internal_field('0/V')
-wb01 = Ofpp.parse_boundary_field('0.1/alpha.water')
-U02,Ub02 = Ofpp.parse_field_all('0.2/U')
-mesh = Ofpp.FoamMesh('.')
+import openfoamparser
+V = openfoamparser.parse_internal_field('0/V')
+wb01 = openfoamparser.parse_boundary_field('0.1/alpha.water')
+U02,Ub02 = openfoamparser.parse_field_all('0.2/U')
+mesh = openfoamparser.FoamMesh('.')
 wall_cells = list(mesh.boundary_cells(b'fixedWall'))
 cell_neighbour_5 = mesh.cell_neighbour_cells(5)
 ```
@@ -107,13 +107,13 @@ We use postProcess to generate cell volume data, which is written to file '0/V'
 alpha.water  alpha.water.orig  p_rgh  U  V
 ```
 
-### Use Ofpp to process data
+### Use openfoamparser to process data
 
 Firstly, use function `parse_internal_field` to parse '0/V' and get cell volume data,
 
 ```python
->>> import Ofpp
->>> V=Ofpp.parse_internal_field('0/V')
+>>> import openfoamparser
+>>> V=openfoamparser.parse_internal_field('0/V')
 >>> V.shape
 (2268,)
 >>> sum(V)
@@ -128,12 +128,12 @@ Firstly, use function `parse_internal_field` to parse '0/V' and get cell volume 
 Parse alpha.water to get water's volume fraction,
 
 ```python
->>> W0=Ofpp.parse_internal_field('0/alpha.water')
+>>> W0=openfoamparser.parse_internal_field('0/alpha.water')
 >>> W0.shape
 (2268,)
 >>> sum(W0*V)
 0.00064609979999999856
->>> W01=Ofpp.parse_internal_field('0.1/alpha.water')
+>>> W01=openfoamparser.parse_internal_field('0.1/alpha.water')
 >>> sum(W01*V)
 0.00064609986628872621
 >>> max(W0)
@@ -147,7 +147,7 @@ Parse alpha.water of all time steps, and calculate water volume of each time to 
 >>> import numpy as np
 >>> Wa=[]
 >>> for t in np.arange(0, 1.01, 0.05):
-...     Wa.append(Ofpp.parse_internal_field('%.4g/alpha.water'%t))
+...     Wa.append(openfoamparser.parse_internal_field('%.4g/alpha.water'%t))
 >>> ["{:.5g}".format(sum(x*V)) for x in Wa]
 ['0.0006461', '0.0006461', '0.0006461', '0.0006461', '0.0006461', '0.0006461', '0.0006461', '0.00064307', '0.00064047', '0.00063953', '0.00063297', '0.00063171', '0.00063171', '0.00063171', '0.00063171', '0.00063171', '0.00063171', '0.00063171', '0.00063171', '0.00063171', '0.00063171']
 >>> import matplotlib.pyplot as pl
@@ -157,7 +157,7 @@ Parse alpha.water of all time steps, and calculate water volume of each time to 
 Parse velocity field, which is a vector field. And calculate the velocity magnitude,
 
 ```python
->>> U01=Ofpp.parse_internal_field('0.1/U')
+>>> U01=openfoamparser.parse_internal_field('0.1/U')
 >>> U01.shape
 (2268, 3)
 >>> U01[50]
@@ -170,7 +170,7 @@ array([ 0.280417 , -0.0783402,  0.       ])
 Noticing that some fields are uniform, eg. initial velocity, whose data is a vector,
 
 ```python
->>> U0=Ofpp.parse_internal_field('0/U')
+>>> U0=openfoamparser.parse_internal_field('0/U')
 >>> U0
 array([ 0.,  0.,  0.])
 >>>
@@ -180,10 +180,10 @@ array([ 0.,  0.,  0.])
 
 ### boundary data
 
-Boundary data parsed by Ofpp is a dictionary because there are usually more than one boundary entities.  Its keys are boundary names and values are also dictionaries.
+Boundary data parsed by openfoamparser is a dictionary because there are usually more than one boundary entities.  Its keys are boundary names and values are also dictionaries.
 
 ```python
->>> b01=Ofpp.parse_boundary_field('0.1/alpha.water')
+>>> b01=openfoamparser.parse_boundary_field('0.1/alpha.water')
 >>> b01.keys()
 dict_keys([b'rightWall', b'atmosphere', b'leftWall', b'lowerWall', b'defaultFaces'])
 >>> b01[b'atmosphere'].keys()
@@ -217,7 +217,7 @@ array([  0.00000000e+00,   0.00000000e+00,   0.00000000e+00,
 Create a FoamMesh object and read mesh file.
 
 ```python
->>> mesh = Ofpp.FoamMesh('.')
+>>> mesh = openfoamparser.FoamMesh('.')
 >>> mesh.num_face
 9176
 >>> mesh.num_inner_face
